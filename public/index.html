@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><link rel="icon" href="ongc.png" type="image/png">
+
+    <title>Guest House Feedback Form</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body><h3>
+    <div id="main">
+        <div id="hero">
+            <div id="nav">
+                <a href="https://ongcindia.com/" class="nav-logo"> <img src="ongc.png"></a>
+                <div id="nav-heading">
+                    <h1><b>Guest House Feedback</b></h1>
+                </div>
+            </div>
+            <div id="form-container">
+                <form id="feedback-form">
+                    <label for="guestHouse">Guest House:</label>
+                    <select id="guestHouse" name="guestHouse" required>
+                        <option value="">Select Guest House</option>
+                        <option value="BENGALI MARKET GH">BENGALI MARKET GH</option>
+                        <option value="HAILEY ROAD GH">HAILEY ROAD GH</option>
+                        <option value="GK-1 GH">GK-1 GH</option>
+                        <option value="NEW FRIENDS COLONY GH">NEW FRIENDS COLONY GH</option>
+                        <option value="NOIDA COLONY GH">NOIDA COLONY GH</option>
+                    </select>
+                    <table>
+                        <tr>
+                            <th>Services</th>
+                            <th>Excellent</th>
+                            <th>Good</th>
+                            <th>Fair</th>
+                            <th>Poor</th>
+                        </tr>
+                        <tr>
+                            <td>Front Office Staff</td>
+                            <td><input type="radio" name="frontOffice" value="Excellent" required></td>
+                            <td><input type="radio" name="frontOffice" value="Good"></td>
+                            <td><input type="radio" name="frontOffice" value="Fair"></td>
+                            <td><input type="radio" name="frontOffice" value="Poor"></td>
+                        </tr>
+                        <tr>
+                            <td>Guest House - Food</td>
+                            <td><input type="radio" name="food" value="Excellent" required></td>
+                            <td><input type="radio" name="food" value="Good"></td>
+                            <td><input type="radio" name="food" value="Fair"></td>
+                            <td><input type="radio" name="food" value="Poor"></td>
+                        </tr>
+                        <tr>
+                            <td>Guest House - Staff</td>
+                            <td><input type="radio" name="staff" value="Excellent" required></td>
+                            <td><input type="radio" name="staff" value="Good"></td>
+                            <td><input type="radio" name="staff" value="Fair"></td>
+                            <td><input type="radio" name="staff" value="Poor"></td>
+                        </tr>
+                        <tr>
+                            <td>House Keeping</td>
+                            <td><input type="radio" name="houseKeeping" value="Excellent" required></td>
+                            <td><input type="radio" name="houseKeeping" value="Good"></td>
+                            <td><input type="radio" name="houseKeeping" value="Fair"></td>
+                            <td><input type="radio" name="houseKeeping" value="Poor"></td>
+                        </tr>
+                        <tr>
+                            <td>Cleanliness of the Room</td>
+                            <td><input type="radio" name="cleanliness" value="Excellent" required></td>
+                            <td><input type="radio" name="cleanliness" value="Good"></td>
+                            <td><input type="radio" name="cleanliness" value="Fair"></td>
+                            <td><input type="radio" name="cleanliness" value="Poor"></td>
+                        </tr>
+                        <tr>
+                            <td>Toiletries</td>
+                            <td><input type="radio" name="toiletries" value="Excellent" required></td>
+                            <td><input type="radio" name="toiletries" value="Good"></td>
+                            <td><input type="radio" name="toiletries" value="Fair"></td>
+                            <td><input type="radio" name="toiletries" value="Poor"></td>
+                        </tr>
+                        <tr>
+                            <td>Overall Guest House rating</td>
+                            <td><input type="radio" name="overall" value="Excellent" required></td>
+                            <td><input type="radio" name="overall" value="Good"></td>
+                            <td><input type="radio" name="overall" value="Fair"></td>
+                            <td><input type="radio" name="overall" value="Poor"></td>
+                        </tr>
+                    </table>
+
+                    <div class="form-group">
+                        <label for="comments">Any other comments?</label>
+                        <textarea id="comments" name="comments" rows="4"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="roomNo">Room no.:</label>
+                        <input type="text" id="roomNo" name="roomNo" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" placeholder="Optional" class="optional-watermark">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone:</label>
+                        <input type="text" id="phone" name="phone" placeholder="Optional" class="optional-watermark" maxlength="10">
+                    </div>
+
+                    <br>
+                    <button type="submit">Submit Feedback</button></h3>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript to handle placeholder behavior
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = document.querySelectorAll('.optional-watermark');
+
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    if (this.placeholder === 'Optional') {
+                        this.placeholder = '';
+                    }
+                });
+
+                input.addEventListener('blur', function() {
+                    if (this.placeholder === '') {
+                        this.placeholder = 'Optional';
+                    }
+                });
+            });
+        });
+
+        // Form submission handling with fetch API
+        document.getElementById('feedback-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+
+            fetch('http://localhost:3000/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(Object.fromEntries(formData.entries())),
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error submitting feedback. Please try again later.');
+            });
+        });
+    </script>
+</body>
+</html>
